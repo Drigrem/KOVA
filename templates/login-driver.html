@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{{url_for('static', filename="css/auth_driver.css")}}">
+    <title>Document</title>
+</head>
+<body>
+    <div class="form-container">
+        <div class="logo">KV</div>
+        <h1 class="title__mng">Авторизация</h1>
+            <form action="{{url_for('login_driver')}}" method="post">
+                <input type="text" placeholder="Логин" name="login" required>
+                <input type="password" placeholder="Пароль" name="password" required>
+                <input type="submit" value="Войти">
+                <a class="register" href="{{url_for('register_driver')}}">Регистрация</a>
+                {% for msg in get_flashed_messages() %}
+                <div class="flash_msg">{{msg}}</div>
+                {% endfor %}
+        </form>
+    </div>
+</body>
+</html>

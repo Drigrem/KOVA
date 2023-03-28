@@ -1,0 +1,28 @@
+{% extends 'profile.html' %}
+
+{% block body %}
+<div class="container">
+    {% for order in order %}
+    <table>
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>Стоимость</th>
+                    <th>Дистанция</th>
+                    <th>вес</th>
+                    <th>Время публикация</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ order[0] }}</td>
+                    <td>{{ order[1] }}</td>
+                    <td>{{ order[2] }}</td>
+                    <td>{{ order[3] }}</td>
+                    <td>{{ order[4] }}</td>
+                </tr>
+            </tbody>
+        </table>
+    {% endfor %}
+</div>
+{% endblock %}

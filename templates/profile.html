@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{{url_for('static', filename="css/profile.css")}}">
+    <link rel="stylesheet" href="{{url_for('static', filename="css/profile__order.css")}}">
+    <title>Document</title>
+</head>
+<body>
+    <header>
+        <div class="header__inner">
+            <div class="logo">KOVA</div>
+            <ul>
+                <li><a class="header__link" href="{{url_for('order')}}">Заказы</a></li>
+                <li><a class="header__link" href="{{url_for('history')}}">История заказов</a></li>
+                <li><a class="header__link" href="{{url_for('money')}}">Доходы</a></li>
+            </ul>
+            <div style="display: flex; align-items: center;">
+                <div class="username">{{current_user.get_surname()}} {{current_user.get_name()}} {{current_user.get_second_surname()}}</div>
+                <p><a class="logout" href="{{url_for('logout')}}">Выйти</a>
+            </div>
+        </div>
+    </header>
+    {% block body %}
+    {% endblock %}
+</body>
+</html>

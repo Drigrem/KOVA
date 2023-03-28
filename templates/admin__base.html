@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% block style %}
+    {% endblock %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main_admin.css') }}">
+    <title>Kova</title>
+</head>
+<body>
+<header>
+  <div class="logo">
+    <a href="#">Kova</a>
+  </div>
+  <nav>
+    <ul>
+      <li><a href="{{url_for('add_order')}}">Добавить заказ</a></li>
+      <li><a href="{{url_for('orders')}}">Заказы</a></li>
+      <li><a href="{{url_for('drivers')}}">Список водителей</a></li>
+    </ul>
+  </nav>
+  <div class="logout">
+    <a href="{{url_for('logout')}}">Выйти</a>
+  </div>
+</header>
+{% block body %}
+{% endblock %}
+</body>
+</html>

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block style %}
+	<link rel="stylesheet" href="{{url_for('static', filename='css/main.css')}}">
+	<link rel="stylesheet" href="{{url_for('static', filename='css/auth_driver.css')}}">
+{% endblock %}
+
+{% block content%}
+	<div class="intro">
+		<div class="intro__inner">
+			<div class="description">
+				<div class="logo">KOVA</div>
+				<p>современный и профессиональный сервис,
+					 предлагающий клиентам комплексные услуги
+					  по управлению перевозками грузов по всей России.</p>
+			</div>
+			<div class="auth">
+				<div class="log_form-container">
+					<h1 class="title__mng">Авторизация</h1>
+					<form action="" method="post">
+						<input type="text" class="log_input" placeholder="Логин" name="login" required>
+						<input type="password" class="log_input" placeholder="Пароль" name="password" required>
+						<input type="submit" class="log_submit" value="Войти">
+						<a class="register" href="{{url_for('register_driver')}}">Зарегистрироваться</a>
+						{% for msg in get_flashed_messages() %}
+						<div class="flash_msg">{{msg}}</div>
+						{% endfor %}
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

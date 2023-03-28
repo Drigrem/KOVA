@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block style %}
+    <link rel="stylesheet" href="{{url_for('static', filename='css/reg_driver.css')}}">
+{% endblock %}
+
+{% block content%}
+    <div class="reg_form_container">
+        <div class="logo">KOVA</div>
+        <h1 class="reg_title_mng">Регистрация</h1>
+        <form action="{{url_for('register_driver')}}" method="post">
+            <input type="text" class="reg_input" placeholder="Фамилия" name="surname" required>
+            <input type="text" class="reg_input" placeholder="Имя" name="name" required>
+            <input type="text" class="reg_input" placeholder="Отчество" name="second_surname" required>
+            <input type="text" class="reg_input" placeholder="Номер телефона" name="phone_number" required>
+            <input type="number" class="reg_input" placeholder="Грузоподъёмность транспорта" name="weight" required>
+            <input type="number" class="reg_input" placeholder="Предпочтительные дистанции" name="distance" required>
+            <input type="password" class="reg_input" placeholder="Пароль" name="password" required>
+            <input type="password" class="reg_input" placeholder="Повторите пароль" name="password2" required>
+            <input type="submit" class="reg_submit" value="Зарегистрироваться">
+            {% for msg in get_flashed_messages() %}
+            <div class="flash_msg">{{msg}}</div>
+            {% endfor %}
+        </form>
+    </div>
+{% endblock %}

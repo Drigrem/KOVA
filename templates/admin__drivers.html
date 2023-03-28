@@ -1,0 +1,38 @@
+{% extends 'admin__base.html' %}
+
+{% block style %}
+	<link rel="stylesheet" href="{{url_for('static', filename='css/orders.css')}}">
+{% endblock %}
+
+{% block body %}
+<table class="table">
+	<thead>
+		<tr>
+			<th>id</th>
+			<th>Фамилия</th>
+			<th>Имя</th>
+			<th>Отчество</th>
+			<th>Номер телефона</th>
+			<th>Грузоподъёмность</th>
+			<th>Дистанции</th>
+			<th>Пароль</th>
+			<th>Время регистрации</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for users in users %}
+			<tr>
+				<td>{{ users[0] }}</td>
+				<td>{{ users[1] }}</td>
+				<td>{{ users[2] }}</td>
+				<td>{{ users[3] }}</td>
+				<td>{{ users[4] }}</td>
+				<td>{{ users[5] }}</td>
+				<td>{{ users[6] }}</td>
+				<td>{{ users[7] }}</td>
+				<td>{{ users[8] }}</td>
+			</tr>
+		{% endfor %}
+	</tbody>
+</table>
+{% endblock %}
