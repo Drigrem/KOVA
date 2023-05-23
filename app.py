@@ -65,8 +65,8 @@ def index():
         if request.form['login'] and request.form['password'] == 'admin':
             return redirect(url_for('admin'))
         else:
-            user = dbase.getUserByPhone(request.form['login'])
-            password = dbase.getPassword(request.form['password'])
+            user = dbase.get_user_by_phone(request.form['login'])
+            password = dbase.get_password(request.form['password'])
             if user and password:
                 userlogin = UserLogin().create(user)
                 login_user(userlogin)
@@ -81,11 +81,14 @@ def register_driver():
     if request.method == "POST":
         if len(request.form['phone_number']) == 11:
             if request.form['password'] == request.form['password2']:
-                res = dbase.addUser(request.form['surname'], request.form['name'], request.form['second_surname'],
+                res = dbase.add_user(request.form['surname'], request.form['name'], request.form['second_surname'],
                                     request.form['phone_number'], request.form['weight'], request.form['distance'],
                                     request.form['password'])
-                flash("Вы успешно зарегистрировались")
-                return redirect(url_for('index'))
+                if res:
+                    flash("Вы успешно зарегистрировались")
+                    return redirect(url_for('index'))
+                else:
+                    flash("Пользователь с таким номером телефона уже существует")
             else:
                 flash('Пароли не совпадают')
         else:
@@ -106,42 +109,53 @@ def logout():
 def profile():
     return render_template('profile.html')
 
+
 @app.route("/order")
 @login_required
 def order():
-    res = dbase.getOrder()
+    res = dbase.get_orders()
     return render_template('profile__order.html', order=res)
+
 
 @app.route("/history")
 @login_required
 def history():
     return render_template('profile__history.html')
 
+
 @app.route("/money")
 @login_required
 def money():
     return render_template('profile__money.html')
 
+
 @app.route('/admin')
 def admin():
     return render_template('admin.html')
 
+
 @app.route('/add_order', methods=["POST", "GET"])
 def add_order():
     if request.method == "POST":
-        res = dbase.addOrder(request.form['cost'], request.form['distance'], request.form['weight'])
+        res = dbase.add_order(request.form['cost'], request.form['distance'], request.form['weight'])
+        if res:
+            flash('Order added')
+        else:
+            flash('Failed to add order')
+        return redirect(url_for('admin'))
     return render_template('admin__add__order.html')
+
 
 @app.route('/orders')
 def orders():
-    res = dbase.getOrder()
+    res = dbase.get_orders()
     return render_template('admin__orders.html', orders=res)
 
 
 @app.route('/drivers')
 def drivers():
-    res = dbase.getDriver()
-    return render_template('admin__drivers.html', users=res)
+    drivers_list = dbase.get_drivers()
+    return render_template('drivers.html', drivers=drivers_list)
 
 
 if __name__ == "__main__":

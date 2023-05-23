@@ -9,9 +9,9 @@ class FDataBase:
         self.__db = db
         self.__cur = db.cursor()
 
-    def addUser(self, surname, name, second_surname, phone_number, weight, distance, password):
+    def add_user(self, surname, name, second_surname, phone_number, weight, distance, password):
         try:
-            self.__cur.execute("SELECT COUNT() as count FROM users WHERE phone_number = ?", (phone_number,))
+            self.__cur.execute("SELECT COUNT(*) as count FROM users WHERE phone_number = ?", (phone_number,))
             if self.__cur.fetchone()['count'] > 0:
                 return False
 
@@ -25,31 +25,32 @@ class FDataBase:
             print("Ошибка добавления пользователя в БД: ", e)
             return False
 
-    def getUsers(self):
+    def get_users(self):
         try:
             self.__cur.execute("SELECT id, surname, name, second_surname, phone_number, time FROM users ORDER BY time DESC")
             return self.__cur.fetchall()
         except sqlite3.Error as e:
-            print("Ошибка получения данных об водителях из БД:", e)
+            print("Ошибка получения данных о пользователях из БД:", e)
             return []
 
-    def getUserByPhone(self, phone_number):
+    def get_user_by_phone(self, phone_number):
         try:
             self.__cur.execute("SELECT * FROM users WHERE phone_number = ?", (phone_number,))
-            return self.__cur.fetchone() or False
+            res = self.__cur.fetchone()
+            return dict(zip(self.__cur.description, res)) if res else False
         except sqlite3.Error as e:
-            print("Ошибка получения логина из БД:", e)
+            print("Ошибка получения данных о пользователе из БД:", e)
             return False
 
-    def getPassword(self, password):
+    def get_password(self, password):
         try:
             self.__cur.execute("SELECT * FROM users WHERE password = ?", (password,))
             return self.__cur.fetchone() or False
         except sqlite3.Error as e:
-            print("Ошибка получения логина из БД:", e)
+            print("Ошибка получения данных о пользователе из БД:", e)
             return False
 
-    def getUser(self, user_id):
+    def get_user(self, user_id):
         try:
             self.__cur.execute("SELECT * FROM users WHERE id = ?", (user_id,))
             res = self.__cur.fetchone()
@@ -57,10 +58,10 @@ class FDataBase:
                 print("Пользователь не найден")
             return res or False
         except sqlite3.Error as e:
-            print("Ошибка получения данных из БД:", e)
+            print("Ошибка получения данных о пользователе из БД:", e)
             return False
 
-    def addOrder(self, cost, distance, weight):
+    def add_order(self, cost, distance, weight):
         try:
             tm = int(time.time())
             time_formatted = datetime.datetime.fromtimestamp(tm).strftime("%H:%M")
@@ -72,7 +73,7 @@ class FDataBase:
             print("Ошибка добавления заказа в БД:", e)
             return False
 
-    def getOrder(self):
+    def get_orders(self):
         try:
             self.__cur.execute("SELECT * FROM orders")
             return self.__cur.fetchall()
@@ -80,7 +81,7 @@ class FDataBase:
             print("Ошибка получения заказов из БД:", e)
             return []
 
-    def getDriver(self):
+    def get_drivers(self):
         try:
             self.__cur.execute("SELECT * FROM users")
             return self.__cur.fetchall()
